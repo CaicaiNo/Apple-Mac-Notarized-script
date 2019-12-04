@@ -1,0 +1,1 @@
+# Apple-Mac-Notarized-script
