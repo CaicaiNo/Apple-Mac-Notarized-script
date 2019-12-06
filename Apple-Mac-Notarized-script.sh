@@ -126,7 +126,7 @@ fi
 # 删除原始的app
 rm -r "$APP_PATH"
 # 解压公证后的zip
-unzip "$ZIP_PATH"
+unzip "$ZIP_PATH" -d "$EXPORT_PATH"
 # 对app进行stapler,uploadFileAndNotarized方法仅会对zip进行stapler
 xcrun stapler staple "$APP_PATH"
 
