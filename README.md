@@ -41,13 +41,14 @@ Mac公证打包脚本
 
 https://blog.csdn.net/shengpeng3344/article/details/136197460
 ​
-脚本文件 
 
-替换你的秘钥文件 (例如 AuthKey_2X9R4HXF34.p8)
+脚本文件提供了缓存机制，会根据公证的pkg的md5进行缓存上传和公证结果，如果中途失败，下次继续公证则不用上传
+
+1. 替换你的秘钥文件 (例如 AuthKey_2X9R4HXF34.p8)
 ```c
 private_key = f"./../../res/AuthKey_2X9R4HXF34.p8"
 ```
-设置你的 kid
+2. 设置你的 kid
 ```c
 # 设置 JWT 的 header
 jwt_header = {
@@ -56,8 +57,23 @@ jwt_header = {
     "typ": "JWT"
 }
  ```
+3. 设置你的iss
 
-调用脚本
+```c
+# 设置 JWT 的 payload
+jwt_payload = {
+    "iss": "57246542-96fe-1a63-e053-0824d011072a",
+    "iat": int(now.timestamp()),
+    "exp": int(expires.timestamp()),
+    "aud": "appstoreconnect-v1",
+    "scope": [
+        "GET /notary/v2/submissions",
+        "POST /notary/v2/submissions",
+    ]
+}
+```
+
+4. 调用脚本
 ```c
 python3 -u ./notarize.py --pkg "./Output/${PACKAGE_NAME}_$TIME_INDEX.pkg" --private-key "./../../res/AuthKey_2X9R4HXF34.p8"
 
